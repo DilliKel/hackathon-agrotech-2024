@@ -1,6 +1,6 @@
-# Diagnóstico de Pragas Agrícolas com BERT
+# AgroScan
 
-Este projeto utiliza um modelo de **BERT** para diagnosticar pragas agrícolas com base nas respostas dos usuários sobre sintomas e condições de plantio. O backend é implementado em **Python** com **Flask**, e a API é hospedada no **Google Colab** usando **ngrok** para acesso externo. 
+O AgroScan utiliza **embeddings multilíngues** para diagnosticar pragas agrícolas com base nas respostas dos usuários sobre sintomas e condições de plantio. O backend é implementado em **Python** com **Flask**, e a API pode ser exposta no **Google Colab** usando túnel HTTPS para acesso externo.
 
 ---
 ## Protótipo do Aplicativo
@@ -28,7 +28,7 @@ Este projeto utiliza um modelo de **BERT** para diagnosticar pragas agrícolas c
 
 ## Sobre o Projeto
 
-Este projeto visa fornecer uma ferramenta de diagnóstico para pragas agrícolas, ajudando produtores a identificar e tratar pragas com base nas culturas cultivadas, condições climáticas, e sintomas observados. Usamos um modelo BERT pré-treinado para processar as respostas e fornecer recomendações de diagnóstico e tratamento baseadas em dados extraídos de planilhas (`Base.xlsx` e `Culturas_e_pragas.xlsx`).
+O AgroScan visa fornecer uma ferramenta de diagnóstico para pragas agrícolas, ajudando produtores a identificar e tratar pragas com base nas culturas cultivadas, condições climáticas e sintomas observados. A recomendação usa similaridade semântica com o modelo `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, com dados extraídos de planilhas CSV (`Base.csv` e `Culturas_e_pragas.csv`).
 
 
 ---
@@ -37,10 +37,11 @@ Este projeto visa fornecer uma ferramenta de diagnóstico para pragas agrícolas
 
 - **Python**: Linguagem de programação principal.
 - **Flask**: Framework para criar a API.
-- **Transformers (BERT)**: Para processamento de linguagem natural e embeddings.
+- **Sentence-Transformers**: Para embeddings semânticos multilíngues.
 - **pandas**: Manipulação e leitura de dados das planilhas.
-- **ngrok**: Exposição da API Flask hospedada no Google Colab para acesso externo.
-- **Google Colab**: Ambiente de execução para o modelo BERT e a API.
+- **pyngrok/ngrok**: Exposição opcional da API Flask para acesso externo.
+- **pytest**: Testes automatizados básicos da API e do classificador.
+- **Google Colab**: Ambiente de execução para os notebooks e a API.
 
 ---
 
@@ -48,8 +49,8 @@ Este projeto visa fornecer uma ferramenta de diagnóstico para pragas agrícolas
 
 ### 1. Clonar o Repositório
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/DilliKel/hackathon-agrotech-2024.git
+cd hackathon-agrotech-2024
 ```
 
 ### 2. Instalar Dependências
@@ -62,27 +63,21 @@ pip install -r requirements.txt
 
 Para instalação no Google Colab, rode:
 ```python
-!pip install transformers torch flask flask-ngrok pandas
+!pip install -r requirements.txt
 ```
 
 ---
 
 ## Configuração
 
-1. **Upload das Planilhas**: Carregue `Base.xlsx` e `Culturas_e_pragas.xlsx` diretamente no Google Colab usando o seguinte código:
+1. **Upload das Planilhas**: Carregue `Base.csv` e `Culturas_e_pragas.csv` diretamente no Google Colab usando o seguinte código:
 
    ```python
    from google.colab import files
    uploaded = files.upload()  # Faça o upload das planilhas
    ```
 
-2. **Configuração do ngrok**: No Colab, utilize `flask-ngrok` para expor a API com o seguinte código:
-
-   ```python
-   from flask_ngrok import run_with_ngrok
-   app = Flask(__name__)
-   run_with_ngrok(app)  # Inicia o ngrok para exposição pública da API
-   ```
+2. **Exposição da API (opcional)**: Para teste externo no Colab, utilize ngrok/pyngrok para publicar uma URL HTTPS temporária.
 
 ---
 
@@ -91,7 +86,7 @@ Para instalação no Google Colab, rode:
 ### Executar o Projeto no Google Colab
 
 1. **Carregar as Planilhas**:
-   - Use o `files.upload()` para fazer o upload das planilhas `Base.xlsx` e `Culturas_e_pragas.xlsx`.
+   - Use o `files.upload()` para fazer o upload das planilhas `Base.csv` e `Culturas_e_pragas.csv`.
    
 2. **Rodar o Código da API**:
    - Inicie o Flask no Colab com o comando `app.run()`.
@@ -99,7 +94,7 @@ Para instalação no Google Colab, rode:
 3. **Obter o Link do ngrok**:
    - Copie o link gerado pelo ngrok para acessar a API de qualquer lugar.
 
-4. **Endpoints da API**:
+4. **Endpoint principal da AgroScan API**:
 
    - **`/diagnostico`** (POST): Recebe as respostas do usuário e retorna um diagnóstico e recomendações de tratamento.
      - Exemplo de requisição:
@@ -109,21 +104,97 @@ Para instalação no Google Colab, rode:
        -d '{"respostas": ["Milho", "Folhas amareladas", "Seca prolongada"]}'
        ```
 
-   - **`/perguntas`** (GET): Retorna as perguntas necessárias para o diagnóstico.
+### Executar localmente (estrutura modular)
+
+1. **Rodar a API local**:
+   ```bash
+   .\\.venv\\Scripts\\Activate.ps1
+   python -m src.agroscan.api
+   ```
+   Acesse no navegador: `http://127.0.0.1:5000`
+
+2. **Fluxo visual (MVP Web)**:
+   - Preencha os campos do formulario na tela.
+   - Clique em **Gerar diagnostico**.
+   - Veja o retorno em tela com: diagnostico, tratamento nivel 1, 2 e 3.
+
+3. **Rodar a interface Gradio local**:
+   ```bash
+   python app/gradio_ui.py
+   ```
+
+4. **Executar testes**:
+   ```bash
+   pytest -q
+   ```
+
+---
+
+## Status Atual (Abr/2026)
+
+- API web local funcionando em `/`, `/health` e `/diagnostico`.
+- Classificador com embeddings multilíngues e fallback robusto para tratamento.
+- Regra de prioridade para **match estruturado exato** da linha da base antes do fallback semântico.
+- Testes automatizados passando.
+
+---
+
+## Melhorias Recomendadas
+
+1. **Qualidade de dados**
+   - Padronizar valores categóricos (`Sim/sim`, nomes de meses e culturas).
+   - Remover duplicatas e criar validação automática de consistência dos CSVs.
+2. **Explicabilidade do diagnóstico**
+   - Retornar no payload se o resultado veio de `match_exato` ou `fallback_semantico`.
+   - Expor score de confiança e top-3 hipóteses para debug.
+3. **Cobertura de testes**
+   - Adicionar testes com dados reais das planilhas.
+   - Incluir testes de regressão para casos de borda (variações de acento, caixa e sinônimos).
+4. **UX do MVP**
+   - Melhorar feedback visual de carregamento e mensagens de erro por campo.
+   - Mostrar histórico das últimas consultas na interface.
+5. **Operação e entrega**
+   - Criar script de auditoria de dados para rodar antes de cada demo.
+   - Adicionar pipeline CI simples para rodar `pytest` em push/PR.
+
+---
+
+## Plano de Melhorias para Amanhã
+
+1. Implementar endpoint com metadados de decisão (`tipo_match`, `score`, `top_k`).
+2. Criar script de auditoria das planilhas com relatório de inconsistências.
+3. Padronizar os CSVs (capitalização, acentuação e valores booleanos/categóricos).
+4. Adicionar testes cobrindo os novos metadados e casos reais de regressão.
+5. Ajustar UI para exibir confiança e a origem do diagnóstico.
 
 ---
 
 ## Estrutura do Projeto
 
 ```
-seu-repositorio/
+hackathon-agrotech-2024/
 │
-├── main.py                   # Código principal da API em Flask
-├── requirements.txt          # Lista de dependências do projeto
-├── Base.xlsx                 # Planilha de perguntas e dados base
-├── Culturas_e_pragas.xlsx    # Planilha com dados de pragas e tratamentos
-├── README.md                 # Documentação do projeto
-└── .gitignore                # Arquivos e diretórios ignorados pelo Git
+├── AgroScan_API/
+│   ├── AgroScan_API.ipynb
+│   ├── Base.csv
+│   └── Culturas_e_pragas.csv
+├── src/
+│   ├── __init__.py
+│   └── agroscan/
+│       ├── __init__.py
+│       ├── data_loader.py
+│       ├── classifier.py
+│       └── api.py
+├── app/
+│   └── gradio_ui.py
+├── tests/
+│   ├── conftest.py
+│   ├── test_classifier.py
+│   └── test_api.py
+├── requirements.txt
+├── .gitignore
+├── README.md
+└── LICENSE
 ```
 
 ---
