@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgroScan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <main class="shell">
+    <header class="hero">
+      <p class="eyebrow">AgroScan MVP</p>
+      <h1>Diagnostico de pragas com embeddings multilíngues</h1>
+      <p class="subtitle">Preencha as informacoes da lavoura para receber o diagnostico e as recomendacoes de tratamento em tres niveis.</p>
+    </header>
+
+    <section class="panel">
+      <form id="diagnostico-form">
+        <div class="questions">
+          {% for pergunta in perguntas %}
+          <label class="question">
+            <span>{{ loop.index }}. {{ pergunta }}</span>
+            <input type="text" name="resposta-{{ loop.index0 }}" required>
+          </label>
+          {% endfor %}
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submit-btn">Gerar diagnostico</button>
+          <span id="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel result" id="result-panel" hidden>
+      <h2>Resultado</h2>
+      <div class="result-grid">
+        <article>
+          <h3>Diagnostico</h3>
+          <p id="r-diagnostico">-</p>
+        </article>
+        <article>
+          <h3>Tratamento nivel 1</h3>
+          <p id="r-t1">-</p>
+        </article>
+        <article>
+          <h3>Tratamento nivel 2</h3>
+          <p id="r-t2">-</p>
+        </article>
+        <article>
+          <h3>Tratamento nivel 3</h3>
+          <p id="r-t3">-</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
