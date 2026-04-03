@@ -1,0 +1,16 @@
+Cultura,Categoria da Praga,Pragas Incluídas,Tratamento Nível 1 (Orgânico),Tratamento Nível 2 (Genérico),Tratamento Nível 3 (Agrotóxico Controlado)
+Milho,Pragas do Solo,"Larva-de-arame, Larva-de-alfanete, Larva-Angorá, Corós.", Uso de predadores naturais como ácaros e insetos.,"Rotação de culturas, evitar monocultura e
+ promover aração profunda para 
+expor as larvas ao ambiente.", Aplicação de inseticidas específicos no solo antes do plantio.
+Milho,Lagartas,"Lagarta-elasmo, Lagarta-rosca, Lagarta-cartucho, Lagarta-da-espiga.","Uso de parasitoides, como vespas e besouros.",Remover plantas daninhas e restos culturais antes do plantio.,"Aplicação de inseticidas de contato, principalmente nas bordas do campo."
+Milho,Percevejo,"Percevejo-verde, Percevejo-do-milho.",Introdução de parasitoides que atacam ovos.,"Plantio em períodos menos favoráveis 
+ao percevejo e manejo da palha.","Pulverização de inseticidas, especialmente nas fases iniciais do cultivo."
+Soja,Lagartas,"lagarta_da_soja, lagarta_falsa_me, lagarta_braqueadora.", Uso de vespas parasitoides e de bactérias como Bacillus thuringiensis.,Controle de plantas daninhas e rotação de culturas.,Pulverização de inseticidas seletivos.
+Arroz,Pragas Foliares e do Grão,"Pulgão-da-raiz, Percevejo-do-grão, Lagarta-da-folha, Percevejo-do-colmo, Gorgulho aquático, Lagarta da panícula",Controle biológico com vespas parasitoides,Extrato de pimenta,Fipronil
+Banana,Brocas e Pragas dos Frutos,"Broca-do-rizoma, Tripe-da-ferrugem, Tripe-da-erupção, Broca-rajada, Lagarta-das-palmeiras, Traça-da-bananeira, Paquinhas, Saúvas.",Uso de fungos entomopatogênicos,Sabão potássico,Tiametoxam
+Melancia,Pragas de Folhas e Frutos,"Lagarta-rosca, Broca-das-cucurbitáceas, Percevejo (Leptoglossus sp.), Pulgões, Tripes, Vaquinha",Controle com predadores naturais,Inseticida à base de piretroides,Imidacloprido
+Mandioca,Pragas de Raiz e Solo,"Mandarová, Ácaros, Mosca-branca, Cupins, Formigas, Brocas-do-caule",Uso de nematoides entomopatogênicos,Extrato de alho,Clorantraniliprole
+Abacaxi,Brocas e Insetos de Colmo,"Broca-do-fruto, Broca-do-colo, Caruncho-do-abacaxi, Cochonilha",Óleo de Neem,Bacillus thuringiensis (Bt),Clorantraniliprole
+Batata doce,Pragas de Solo e Colmo,"Broca-da-raiz, Broca-do-colo, Larva-arame, Vaquinha, Gorgulho da batata-doce, Negrito da batata-doce",Uso de armadilhas adesivas,Extrato de pimenta,Fipronil
+Citros,Pragas de Folha e Fruto,"Minador-dos-citros, Cochonilhas, Ácaro-da-ferrugem, Ácaros desfolhadores, Ácaro rajado",Controle biológico com predadores,Óleo de Neem,Imidacloprido
+Mamão,Brocas e Pragas do Tronco,"Ácaro branco, Cochonilha, Cigarrinha verde, Mosca-das-frutas, Mosca-branca, Broca do caule do mamoeiro, Mandarová",Uso de fungos entomopatogênicos,Inseticida à base de piretroides,Tiametoxa
