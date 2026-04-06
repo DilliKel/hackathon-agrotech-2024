@@ -7,6 +7,9 @@ Diagnosticador de pragas agrícolas com **embeddings semânticos multilíngues**
 ## Sumário
 
 - [Sobre o Projeto](#sobre-o-projeto)
+- [Objetivo e Público-Alvo](#objetivo-e-público-alvo)
+- [Funcionalidades Principais](#funcionalidades-principais)
+- [Arquitetura da Solução](#arquitetura-da-solução)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Instalação](#instalação)
 - [Uso](#uso)
@@ -19,6 +22,28 @@ Diagnosticador de pragas agrícolas com **embeddings semânticos multilíngues**
 ## Sobre o Projeto
 
 O AgroScan visa fornecer uma ferramenta de diagnóstico para pragas agrícolas, ajudando produtores a identificar e tratar pragas com base nas culturas cultivadas, condições climáticas e sintomas observados. A recomendação usa similaridade semântica com o modelo `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, com dados extraídos de planilhas CSV (`Base.csv` e `Culturas_e_pragas.csv`).
+
+## Objetivo e Público-Alvo
+
+- **Objetivo**: simplificar o processo de diagnóstico de pragas e oferecer orientação prática de tratamento para reduzir danos e acelerar a tomada de decisão no campo.
+- **Público-alvo**: produtores rurais, técnicos agrícolas e consultores que atuam em prevenção e controle de pragas.
+
+## Funcionalidades Principais
+
+1. **Coleta guiada de dados**
+   - A interface coleta respostas sobre cultura, sintomas e condições ambientais.
+2. **Diagnóstico semântico com prioridade estrutural**
+   - O classificador tenta primeiro o match estruturado exato na base.
+   - Quando necessário, aplica fallback semântico por embeddings para encontrar a hipótese mais próxima.
+3. **Recomendações em 3 níveis**
+   - Retorno com opções de tratamento organizadas em nível 1, 2 e 3.
+
+## Arquitetura da Solução
+
+1. **Camada de Dados**: leitura e padronização dos CSVs em `data/`.
+2. **Camada de IA/Regra**: geração de similaridade semântica e seleção da hipótese final.
+3. **Camada de Serviço**: API Flask com endpoints para health-check e diagnóstico.
+4. **Camada de Interface**: interface web da API e alternativa em Gradio.
 
 ---
 
@@ -70,6 +95,11 @@ Acesse em `http://127.0.0.1:5000`.
 1. Preencha os campos do formulário na tela inicial.
 2. Clique em **Gerar diagnóstico**.
 3. Veja o retorno com: diagnóstico, tratamento nível 1, 2 e 3.
+
+**Exemplo de uso prático:**
+- Um produtor informa cultura, sintomas e cenário climático.
+- O sistema calcula a melhor hipótese de praga com base na base histórica.
+- A resposta retorna diagnóstico e plano de tratamento em três níveis.
 
 **Endpoint direto (POST)**:
 ```bash
