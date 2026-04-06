@@ -7,8 +7,10 @@ from flask import Flask, jsonify, render_template, request
 from .classifier import AgroScanClassifier
 
 
-DEFAULT_BASE_CSV = Path("AgroScan_API") / "Base.csv"
-DEFAULT_CULTURAS_CSV = Path("AgroScan_API") / "Culturas_e_pragas.csv"
+_HERE = Path(__file__).resolve().parent
+_ROOT = _HERE.parents[1]
+DEFAULT_BASE_CSV = _ROOT / "data" / "Base.csv"
+DEFAULT_CULTURAS_CSV = _ROOT / "data" / "Culturas_e_pragas.csv"
 
 
 def create_app(
@@ -16,7 +18,11 @@ def create_app(
     base_csv_path: str | Path = DEFAULT_BASE_CSV,
     culturas_csv_path: str | Path = DEFAULT_CULTURAS_CSV,
 ) -> Flask:
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        template_folder="templates",
+        static_folder="static",
+    )
     clf = classifier or AgroScanClassifier.from_csv(base_csv_path, culturas_csv_path)
 
     if hasattr(clf, "data") and hasattr(clf.data, "df_base") and hasattr(clf.data, "diag_base_col"):
