@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import gradio as gr
 
 from src.agroscan.classifier import AgroScanClassifier
+
+_ROOT = Path(__file__).resolve().parent.parent
 
 
 def build_interface(classifier: AgroScanClassifier) -> gr.Interface:
@@ -39,6 +43,7 @@ def build_interface(classifier: AgroScanClassifier) -> gr.Interface:
 
 if __name__ == "__main__":
     classifier = AgroScanClassifier.from_csv(
-        "AgroScan_API/Base.csv", "AgroScan_API/Culturas_e_pragas.csv"
+        _ROOT / "data" / "Base.csv",
+        _ROOT / "data" / "Culturas_e_pragas.csv",
     )
     build_interface(classifier).launch()
