@@ -1,4 +1,4 @@
-﻿# AgroScan
+# AgroScan 🥉 3º lugar — Hackathon AgroTech 2024
 
 Diagnosticador de pragas agrícolas com **embeddings semânticos multilíngues**. O usuário responde perguntas sobre sintomas e condições da cultura; o sistema encontra o diagnóstico mais próximo por similaridade de cosseno e retorna recomendações de tratamento em três níveis.
 
@@ -20,6 +20,8 @@ Diagnosticador de pragas agrícolas com **embeddings semânticos multilíngues**
 ---
 
 ## Sobre o Projeto
+
+O AgroScan foi desenvolvido durante o Hackathon AgroTech 2024, onde conquistou o **🥉 3º lugar** entre os projetos finalistas.
 
 O AgroScan visa fornecer uma ferramenta de diagnóstico para pragas agrícolas, ajudando produtores a identificar e tratar pragas com base nas culturas cultivadas, condições climáticas e sintomas observados. A recomendação usa similaridade semântica com o modelo `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, com dados extraídos de planilhas CSV (`Base.csv` e `Culturas_e_pragas.csv`).
 
