@@ -7,27 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
   <div class="bg-grid"></div>
   <main class="shell">
     <header class="hero">
       <p class="eyebrow">AgroScan MVP</p>
-      <h1>Diagnostico de pragas com embeddings multilíngues</h1>
+      <h1>Diagnostico de pragas com embeddings multilingues</h1>
       <p class="subtitle">Preencha as informacoes da lavoura para receber o diagnostico e as recomendacoes de tratamento em tres niveis.</p>
     </header>
 
     <section class="panel">
       <form id="diagnostico-form">
-        <div class="questions">
-          {% for pergunta in perguntas %}
-          <label class="question">
-            <span>{{ loop.index }}. {{ pergunta }}</span>
-            <input type="text" name="resposta-{{ loop.index0 }}" required>
-          </label>
-          {% endfor %}
-        </div>
+        <div class="questions" id="questions-container"></div>
 
         <div class="actions">
           <button type="submit" id="submit-btn">Gerar diagnostico</button>
@@ -59,6 +52,6 @@
     </section>
   </main>
 
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>

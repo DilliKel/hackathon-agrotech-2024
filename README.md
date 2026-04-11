@@ -83,8 +83,6 @@ pip install -r requirements.txt
 
 ---
 
-## Uso
-
 ### Rodar a API local
 
 ```bash
@@ -133,7 +131,7 @@ python -m pytest -q
 
 ---
 
-## Melhorias Recomendadas
+## Melhorias Pendentes
 
 1. **Qualidade de dados**
    - Padronizar valores categóricos (`Sim/sim`, nomes de meses e culturas).
@@ -158,6 +156,10 @@ python -m pytest -q
 ```
 hackathon-agrotech-2024/
 │
+├── index.html
+├── assets/
+│   ├── app.js
+│   └── styles.css
 ├── data/
 │   ├── Base.csv
 │   └── Culturas_e_pragas.csv
@@ -167,9 +169,7 @@ hackathon-agrotech-2024/
 │       ├── __init__.py
 │       ├── data_loader.py
 │       ├── classifier.py
-│       ├── api.py
-│       ├── templates/
-│       └── static/
+│       └── api.py
 ├── app/
 │   └── gradio_ui.py
 ├── tests/

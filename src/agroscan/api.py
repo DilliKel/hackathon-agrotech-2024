@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, request, send_file
 
 from .classifier import AgroScanClassifier
 
@@ -20,8 +20,8 @@ def create_app(
 ) -> Flask:
     app = Flask(
         __name__,
-        template_folder="templates",
-        static_folder="static",
+        static_folder=str(_ROOT / "assets"),
+        static_url_path="/assets",
     )
     clf = classifier or AgroScanClassifier.from_csv(base_csv_path, culturas_csv_path)
 
@@ -38,11 +38,15 @@ def create_app(
 
     @app.get("/")
     def index():
-        return render_template("index.html", perguntas=perguntas)
+        return send_file(_ROOT / "index.html")
 
     @app.get("/health")
     def health() -> tuple[dict[str, str], int]:
         return {"status": "ok", "service": "AgroScan API"}, 200
+
+    @app.get("/perguntas")
+    def listar_perguntas() -> tuple[dict[str, list[str]], int]:
+        return {"perguntas": perguntas}, 200
 
     @app.post("/diagnostico")
     def diagnostico():

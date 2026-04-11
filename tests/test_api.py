@@ -40,6 +40,18 @@ def test_diagnostico_endpoint():
     assert resp.get_json()["diagnostico"] == "Pragas do Solo"
 
 
+def test_perguntas_endpoint():
+    app = create_app(classifier=StubClassifier())
+    client = app.test_client()
+
+    resp = client.get("/perguntas")
+    data = resp.get_json()
+
+    assert resp.status_code == 200
+    assert isinstance(data.get("perguntas"), list)
+    assert len(data["perguntas"]) >= 1
+
+
 def test_diagnostico_invalido():
     app = create_app(classifier=StubClassifier())
     client = app.test_client()
