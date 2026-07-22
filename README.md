@@ -1,3 +1,14 @@
+---
+title: AgroScan
+emoji: 🌾
+colorFrom: green
+colorTo: yellow
+sdk: gradio
+sdk_version: 5.5.0
+app_file: app.py
+pinned: false
+---
+
 # AgroScan 🥉 3º lugar — Hackathon AgroTech 2024
 
 Diagnosticador de pragas agrícolas com **embeddings semânticos multilíngues**. O usuário responde perguntas sobre sintomas e condições da cultura; o sistema encontra o diagnóstico mais próximo por similaridade de cosseno e retorna recomendações de tratamento em três níveis.
