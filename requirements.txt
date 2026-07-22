@@ -4,5 +4,6 @@ torch>=2.4.0
 flask>=3.0.0
 gradio>=5.5.0
 huggingface_hub<0.26.0
+spaces>=0.30.0
 pytest>=8.3.0
 python-dotenv>=1.0.0

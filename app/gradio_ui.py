@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import gradio as gr
+import spaces
 
 from src.agroscan.classifier import AgroScanClassifier
 
@@ -12,6 +13,7 @@ _ROOT = Path(__file__).resolve().parent.parent
 def build_interface(classifier: AgroScanClassifier) -> gr.Interface:
     perguntas = [c for c in classifier.data.df_base.columns if c != classifier.data.diag_base_col]
 
+    @spaces.GPU
     def interface_gradio(*respostas_usuario):
         respostas = list(respostas_usuario)
         resultado = classifier.diagnostico_e_tratamento(respostas)

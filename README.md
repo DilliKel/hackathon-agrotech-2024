@@ -3,7 +3,9 @@ title: AgroScan
 emoji: 🌾
 colorFrom: green
 colorTo: yellow
-sdk: docker
+sdk: gradio
+sdk_version: 5.5.0
+app_file: space_entry.py
 pinned: false
 ---
 
