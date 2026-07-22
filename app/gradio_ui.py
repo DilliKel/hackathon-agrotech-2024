@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import gradio as gr
@@ -8,6 +9,21 @@ import spaces
 from src.agroscan.classifier import AgroScanClassifier
 
 _ROOT = Path(__file__).resolve().parent.parent
+_PARENTESES_FINAL = re.compile(r"\s*\([^)]*\)\s*$")
+
+
+def _valores_canonicos(valores) -> list[str]:
+    """Deduplica valores que só diferem em acento/caixa, preferindo a grafia capitalizada."""
+    agrupados: dict[str, str] = {}
+    for valor in valores:
+        valor = str(valor).strip()
+        if not valor:
+            continue
+        chave = AgroScanClassifier._normalizar_texto(valor)
+        atual = agrupados.get(chave)
+        if atual is None or (valor[:1].isupper() and not atual[:1].isupper()):
+            agrupados[chave] = valor
+    return sorted(agrupados.values())
 
 
 def build_interface(classifier: AgroScanClassifier) -> gr.Interface:
@@ -26,7 +42,13 @@ def build_interface(classifier: AgroScanClassifier) -> gr.Interface:
             resultado.get("tratamento_nivel_3", "-"),
         ]
 
-    inputs = [gr.Textbox(label=pergunta) for pergunta in perguntas]
+    inputs = [
+        gr.Dropdown(
+            label=_PARENTESES_FINAL.sub("", pergunta).strip(),
+            choices=_valores_canonicos(classifier.data.df_base[pergunta]),
+        )
+        for pergunta in perguntas
+    ]
     outputs = [
         gr.Textbox(label="Diagnóstico"),
         gr.Textbox(label="Tratamento Nível 1 (Orgânico)"),
