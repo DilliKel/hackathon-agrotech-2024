@@ -4,7 +4,7 @@ emoji: 🌾
 colorFrom: green
 colorTo: yellow
 sdk: gradio
-sdk_version: 5.5.0
+sdk_version: 6.11.0
 app_file: space_entry.py
 pinned: false
 ---
